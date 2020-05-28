@@ -32,7 +32,6 @@ function dfs_stack(node){
             }
         }
     }
-
 }
 
 // Used to generate maze
