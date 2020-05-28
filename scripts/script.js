@@ -31,6 +31,9 @@ function mark_unvisited(i,j){
 }
 
 function connect(i1,j1,i2,j2){
+
+  // Find the i,j index of the black wall between the two white nodes
+  // and turn it into a non-wall
   var i;
   var j;
   if(i1 == i2){
@@ -46,7 +49,7 @@ function connect(i1,j1,i2,j2){
   set_color(shape,'white');
 }
 
-function make_maze(w,h){
+function make_checkerboard(w,h){
   stage = new Konva.Stage({
     container: 'container',
     width: width,
@@ -80,25 +83,12 @@ function make_maze(w,h){
   }
   // add the layer to the stage
   stage.add(layer);
+  // Make start and end point green and red
   var start = stage.find(`#0_1`)[0];
   var end = stage.find(`#${h-1}_${w-2}`)[0];
   start.attrs.fill = 'green';
   end.attrs.fill = 'red';
 }
-
-async function generate_helper(w,h){
-  make_maze(w,h);
-  var first = stage.find(`#1_1`)[0];
-  //dfs_stack(first);
-  dfs(first);
-}
-
-async function solver_helper(i,j,w,h){
-  if(!dfs_solve(1,1,w,h)){
-    console.log("Unsolvable");
-  }
-}
-
 
 document.getElementById('reset').addEventListener('click', () => {
   stage.destroy();
@@ -106,28 +96,25 @@ document.getElementById('reset').addEventListener('click', () => {
 });
 
 document.getElementById('myForm').addEventListener('submit', (event) =>{
-  /*
-  var generate = document.getElementById("generate");
-  var icon = document.createElement('i');
-  icon.classList.add("fa", "fa-spinner", "fa-spin");
-  console.log(generate);
-  generate.appendChild(icon);
-  */
+  // Prevent page refresh
   event.preventDefault();
+
+  // Get width and height input
   w = $('#width').val();
   h = $('#height').val();
   console.log('Generating');
-  generate_helper(w,h).then( () => {
-    console.log('Completed');
-    //<i id="loading" class="fa fa-spinner fa-spin"></i>
 
-    //element.style.visibility = "hidden";
-  });
+  // Make the checkerboard
+  make_checkerboard(w,h);
+  
+  // Start at 1,1 and generate maze
+  var first = stage.find(`#1_1`)[0];
+  gen_maze(first);
 });
 
 document.getElementById('solve').addEventListener('click', () => {
-  
-  solver_helper(1,1,w,h).then( () => {
-    console.log('Completed');
-  });
+  // Dfs_solve returns whether maze is solvable or not
+  if(!dfs_solve(1,1,w,h)){
+    console.log("Unsolvable");
+  }
 },false);

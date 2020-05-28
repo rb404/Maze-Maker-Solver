@@ -1,9 +1,72 @@
-var dir_2 = [2,0,-2,0];
 var dir_1 = [0,2,0,-2];
+var dir_2 = [2,0,-2,0];
 
 var dir_A = [1,0,-1,0];
 var dir_B = [0,1,0,-1];
-var prime = 982451653;
+//var prime = 982451653;
+
+
+// Used to generate maze
+function gen_maze(node){
+    // Set the current node to visited
+    node.attrs.visited_A = true;
+    // Get random starting point
+    var start = Math.random() * 4;
+
+    // Get current node's i,j position
+    var cur_i = node.attrs.row;
+    var cur_j = node.attrs.col;
+
+    // Start at random index between [0,4)
+    for (var j = start; j < start + 4; ++j) {
+        var child_i = node.attrs.row + dir_1[Math.floor(j%4)];
+        var child_j = node.attrs.col + dir_2[Math.floor(j%4)];
+        var child = stage.find(`#${child_i}_${child_j}`)[0];
+        // If child exists
+        if(child && child.attrs.visited_A == false){
+            connect(cur_i,cur_j,child_i,child_j);
+            gen_maze(child);
+        }
+    }
+}
+
+// Used to solve maze
+function dfs_solve(i, j, width, height){
+    // If end is reached
+    if(i == height - 2 && j == width - 2){
+        mark_visited(i,j);
+        return true;
+    }
+    // Get current i,j node from layer
+    var node = stage.find(`#${i}_${j}`)[0];
+
+    // If the i,j node exists and it is unvisited and it is not a wall
+    if (node && !node.attrs.visited_B && !node.attrs.wall) {
+        // Mark visited
+        node.attrs.visited_B = true;
+        mark_visited(i,j);
+        // Search in all directions
+        if(dfs_solve(i+1,j, width, height) == true){
+            return true;
+        }
+        if(dfs_solve(i-1,j, width, height) == true){
+            return true;
+        }
+        if(dfs_solve(i,j+1, width, height) == true){
+            return true;
+        }
+        if(dfs_solve(i,j-1, width, height) == true){
+            return true;
+        }
+        // Backtrack
+        mark_unvisited(i,j);
+        return false;
+    }
+    return false;
+}
+
+
+/*---------------Misc--------------*/
 
 /*Not Working*/ 
 function dfs_stack(node){
@@ -32,52 +95,6 @@ function dfs_stack(node){
             }
         }
     }
-}
-
-// Used to generate maze
-function dfs(node){
-    if(!node){
-        return;
-    }
-    node.attrs.visited_A = true;
-    var start = Math.random() * prime;
-    for (var j = start; j < start + 4; ++j) {
-        var child_i = node.attrs.row + dir_1[Math.floor(j%4)];
-        var child_j = node.attrs.col + dir_2[Math.floor(j%4)];
-        var child = stage.find(`#${child_i}_${child_j}`)[0];
-        // If child exists
-        if(child && child.attrs.visited_A == false){
-            connect(node.attrs.row,node.attrs.col,child_i,child_j);
-            dfs(child);
-        }
-    }
-}
-// Used to solve maze
-function dfs_solve(i, j, width, height){
-    if(i == height - 2 && j == width - 2){
-        mark_visited(i,j);
-        return true;
-    }
-    var node = stage.find(`#${i}_${j}`)[0];
-    if (node && !node.attrs.visited_B && !node.attrs.wall) {
-        node.attrs.visited_B = true;
-        mark_visited(i,j);
-        if(dfs_solve(i+1,j, width, height) == true){
-            return true;
-        }
-        if(dfs_solve(i-1,j, width, height) == true){
-            return true;
-        }
-        if(dfs_solve(i,j+1, width, height) == true){
-            return true;
-        }
-        if(dfs_solve(i,j-1, width, height) == true){
-            return true;
-        }
-        mark_unvisited(i,j);
-        return false;
-    }
-    return false;
 }
 
 /*Not Working*/ 
