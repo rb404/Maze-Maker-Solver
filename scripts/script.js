@@ -118,7 +118,3 @@ document.getElementById('solve').addEventListener('click', () => {
     console.log("Unsolvable");
   }
 },false);
-
-document.getElementById('TEMP').addEventListener('click', () => {
-  console.log(dirs[json[0][0]].i);
-},false);
