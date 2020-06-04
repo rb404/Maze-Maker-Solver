@@ -3,25 +3,45 @@ var dir_2 = [2,0,-2,0];
 
 var dir_A = [1,0,-1,0];
 var dir_B = [0,1,0,-1];
-//var prime = 982451653;
 
+// Load all 24 permuations of up, left, down, right from file
+var json = null;
+$.ajax({
+    'async': false,
+    'global': false,
+    'url': "/moves.json",
+    'dataType': "json",
+    'success': function (data) {
+        json = data;
+    }
+});
+
+// The row and column moves that correspond to each direction
+var dirs = {
+    u: {i:-2, j:0},
+    l: {i:0, j:-2},
+    d: {i:2, j:0},
+    r: {i:0, j:2},
+}
 
 // Used to generate maze
 function gen_maze(node){
     // Set the current node to visited
     node.attrs.visited_A = true;
-    // Get random starting point
-    var start = Math.random() * 4;
+
+    // Select a random permuation from [0,24)
+    var perm = Math.floor(Math.random() * 24);
 
     // Get current node's i,j position
     var cur_i = node.attrs.row;
     var cur_j = node.attrs.col;
 
-    // Start at random index between [0,4)
-    for (var j = start; j < start + 4; ++j) {
-        var child_i = node.attrs.row + dir_1[Math.floor(j%4)];
-        var child_j = node.attrs.col + dir_2[Math.floor(j%4)];
+    // Iterate through the current permutation
+    for (let n = 0; n < 4; ++n) {
+        var child_i = node.attrs.row + dirs[json[perm][n]].i;
+        var child_j = node.attrs.col + dirs[json[perm][n]].j;
         var child = stage.find(`#${child_i}_${child_j}`)[0];
+        
         // If child exists
         if(child && child.attrs.visited_A == false){
             connect(cur_i,cur_j,child_i,child_j);
