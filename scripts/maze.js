@@ -4,18 +4,6 @@ var dir_2 = [2,0,-2,0];
 var dir_A = [1,0,-1,0];
 var dir_B = [0,1,0,-1];
 
-// Load all 24 permuations of up, left, down, right from file
-var json = null;
-$.ajax({
-    'async': false,
-    'global': false,
-    'url': "/moves.json",
-    'dataType': "json",
-    'success': function (data) {
-        json = data;
-    }
-});
-
 // The row and column moves that correspond to each direction
 var dirs = {
     u: {i:-2, j:0},

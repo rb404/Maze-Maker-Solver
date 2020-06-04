@@ -6,6 +6,25 @@ var tween;
 var w;
 var h;
 
+// Load all 24 permuations of up, left, down, right from file
+var json = null;
+function loadJSON(callback) {   
+  var xobj = new XMLHttpRequest();
+  xobj.overrideMimeType("application/json");
+  xobj.open('GET', 'moves.json', true);
+  xobj.onreadystatechange = function () {
+      if (xobj.readyState == 4 && xobj.status == "200") {
+      // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+      callback(xobj.responseText);
+      }
+  };
+  xobj.send(null);  
+}
+
+loadJSON(function(response) {
+  json = JSON.parse(response);
+});
+
 function set_color(shape, color){
   if (tween) {
     tween.destroy();
