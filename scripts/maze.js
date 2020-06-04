@@ -17,7 +17,7 @@ function gen_maze(node){
     // Set the current node to visited
     node.attrs.visited_A = true;
 
-    // Select a random permuation from [0,24)
+    // Select one of 24 random permuations from [0,24)
     var perm = Math.floor(Math.random() * 24);
 
     // Get current node's i,j position

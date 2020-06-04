@@ -126,8 +126,9 @@ document.getElementById('myForm').addEventListener('submit', (event) =>{
   // Make the checkerboard
   make_checkerboard(w,h);
   
-  // Start at 1,1 and generate maze
-  var first = stage.find(`#1_1`)[0];
+  // Start at end and generate maze
+  //var first = stage.find(`#1_1`)[0];
+  var first = stage.find(`#${h-2}_${w-2 }`)[0];
   gen_maze(first);
 });
 
