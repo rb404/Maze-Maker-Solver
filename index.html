@@ -1,29 +1,80 @@
-<!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Maze Maker!</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!DOCTYPE HTML>
+<!--
+	Typify by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Maze Maker!</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://unpkg.com/konva@4.0.12/konva.min.js"></script>
-    </head>
-    <body>
-        <h1>Maze Maker</h1>
-        <form id="myForm">
-            <label for="width">Width:</label>
-            <input type="number" id="width" name="name-input" min="3" max = "75" required>
-            <label for="height">Height:</label>
-            <input type="number" id="height" name="name-input" min="3" max = "75" required>
-            <button id="generate" class="buttonload" type="submit">Generate</button>
-        </form>
-        <button class="buttonload" id="solve">Solve</button>
-        <button class="buttonload" id="reset">Reset</button><br>
-        <div id="container"></div>
-        <script src="scripts/script.js"></script>
-        <script src="scripts/deque.js"></script>
-        <script src="scripts/maze.js"></script>
-    </body>
+	</head>
+	<body>
+
+		<!-- Banner -->
+			<section id="banner">
+				<h2><strong>Maze Maker Generator</strong></h2>
+				<p>By Ryan Brown</p>
+				<!--ul class="actions">
+					<li><a href="#" class="button special">Get started</a></li>
+				</!--ul-->
+			</section>
+
+		<!-- One -->
+			<section id="one" class="wrapper special">
+				<div class="inner">
+					<form id="myForm">
+						<ul class="actions">
+							<li>
+								<label for="width">Width</label>
+								<input type="number" id="width" name="name-input" min="1" max = "30" required>
+							</li>
+							<li>
+								<label for="height">Height</label>
+								<input type="number" id="height" name="name-input" min="1" max = "30" required>
+							</li>
+							
+						</ul>
+						<ul class="actions">
+							<input type="checkbox" id="search-space" name="search-space">
+							<label for="search-space">Show Search Space (Red)</label>
+						</ul>
+						<button id="generate" class="button special" type="submit">Generate</button>
+						<button class="button special" id="solve">Solve</button>
+					</form>
+					
+					<div class="maze-wrapper">
+						<div id="maze"></div>
+					</div>
+					
+						<span id="tot-nodes"></span><br>
+						<span id="correct"></span><br>
+						<span id="incorrect"></span><br>
+						<span id="efficiency"></span>	
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="copyright">
+					&copy; Ryan Brown
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<script src="scripts/script.js"></script>
+			<script src="scripts/deque.js"></script>
+			<script src="scripts/maze.js"></script>
+	</body>
 </html>
