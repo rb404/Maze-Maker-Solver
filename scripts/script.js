@@ -159,7 +159,7 @@ document.getElementById('solve').addEventListener('click', () => {
   if(!dfs_solve(1,1,w,h)){
     console.log("Unsolvable");
   }
-  let rate = (num_visited/num_nodes) * 100;
+  let rate = ((num_visited/num_nodes) * 100).toFixed(2);
   document.getElementById("tot-nodes").innerHTML = "Total Nodes: " + num_nodes;
   document.getElementById("correct").innerHTML = "Correct Nodes: " + (num_visited - bad_nodes);
   document.getElementById("incorrect").innerHTML = "Inorrect Nodes: " + bad_nodes;
